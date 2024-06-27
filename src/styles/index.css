@@ -1,12 +1,44 @@
 
-/* 
+.title {
+  color: whitesmoke;
+  font-size: 70px;
+  font-family: 'Courier New', Courier, monospace;
+  padding-top: 80px;
+  animation: type 5s ease-in-out forwards;
+}
 
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
+@keyframes type {
+  0% {
+    opacity: 0;
+    letter-spacing: 10px;
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 0;
+  }
+}
 
-*/
+.background {
+  background-color: #333641;
+  height: 200vh;
+  width: 100vw; 
+}
+
+.listTodo{
+  animation: slide-in 3s ease-in-out forwards;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.delete .badge {
+  cursor: pointer;
+}
