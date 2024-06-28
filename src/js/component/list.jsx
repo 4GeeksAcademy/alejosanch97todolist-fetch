@@ -38,7 +38,7 @@ const List = () => {
                 const data = await response.json();
                 setTodos([...todos, { id: data.id, label: inputValue }]);
                 setInputValue('');
-                alert("Tarea añadida a Playground");
+                alert("Task added");
             } else {
                 console.error('Error al añadir tarea:', response.statusText);
             }
@@ -64,7 +64,7 @@ const List = () => {
                 setEditMode(false);
                 setEditId(null);
                 setEditValue('');
-                alert("Tarea editada en Playground");
+                alert("Task edited");
             } else {
                 console.error('Error al editar tarea:', response.statusText);
             }
@@ -83,7 +83,7 @@ const List = () => {
             });
             if (response.ok) {
                 setTodos(todos.filter(todo => todo.id !== id));
-                alert("Tarea borrada también de Playground");
+                alert("Task deleted");
             } else {
                 console.error('Error al borrar tarea:', response.statusText);
             }
@@ -106,68 +106,95 @@ const List = () => {
     };
 
     return (
-        <div className="col d-flex justify-content-center list">
-            <form>
-                <div className="row shadow p-3 rounded">
-                    <input
-                        type="text"
-                        onChange={e => setInputValue(e.target.value)}
-                        value={inputValue}
-                        placeholder="Añadir nueva tarea"
-                        onKeyPress={e => {
-                            if (e.key === 'Enter') {
-                                e.preventDefault();
-                                addTodo();
-                            }
-                        }}
-                    />
-                </div>
-                {todos.map(todo => (
-                    <div key={todo.id} className="row shadow todos">
-                        {editMode && editId === todo.id ? (
-                            <div>
-                                <input
-                                    type="text"
-                                    value={editValue}
-                                    onChange={e => setEditValue(e.target.value)}
-                                />
-                                <button
-                                    type="button"
-                                    className="btn btn-primary me-1"
-                                    onClick={() => editTodo(todo.id)}
-                                >
-                                    Guardar
-                                </button>
-                                <button
-                                    type="button"
-                                    className="btn btn-warning"
-                                    onClick={() => {
-                                        setEditMode(false);
-                                        setEditId(null);
-                                        setEditValue('');
-                                    }}
-                                >
-                                    Cancelar
-                                </button>
+        <div className="container-fluid listTodo">
+            <div className="row justify-content-center">
+                <div className="col-md-8 col-lg-6">
+                 <form>
+                    <div className="card">
+                        <div className="card-body">
+                            <input
+                                type="text"
+                                className="form-control"
+                                onChange={e => setInputValue(e.target.value)}
+                                value={inputValue}
+                                placeholder="What needs to be done?"
+                                onKeyPress={e => {
+                                    if (e.key === 'Enter') {
+                                        e.preventDefault();
+                                        addTodo();
+                                    }
+                                }}
+                            />
+                        </div>
+                        <ul className="list-group list-group-flush">
+                        {todos.map(todo => (
+                            <div key={todo.id} className="list-group-item">
+                                {editMode && editId === todo.id ? (
+                                        <div className="d-flex justify-content-between align-items-center">
+                                        <input
+                                          type="text"
+                                          className="form-control form-control-sm me-2"
+                                          value={editValue}
+                                          onChange={e => setEditValue(e.target.value)}
+                                        />
+                                        <div className="d-flex">
+                                          <button
+                                            type="button"
+                                            className="btn btn-success btn-sm"
+                                            onClick={() => editTodo(todo.id)}
+                                          >
+                                            Guardar
+                                          </button>
+                                          <button
+                                            type="button"
+                                            className="btn btn-outline-danger btn-sm ms-2"
+                                            onClick={() => {
+                                              setEditMode(false);
+                                              setEditId(null);
+                                              setEditValue('');
+                                            }}
+                                          >
+                                            Cancelar
+                                          </button>
+                                        </div>
+                                      </div>
+                                ) : (
+                                    <div className="d-flex justify-content-between align-items-center border-bottom pb-2">
+                                        <p className="m-0">{todo.label}</p>
+                                        <div className="d-flex">
+                                            <span
+                                            type="button"
+                                            className="btn btn-sm btn-danger me-2"
+                                            onClick={() => eraseTodo(todo.id)}
+                                            >
+                                            <i className="fas fa-trash"></i>
+                                            </span>
+                                            <span
+                                            type="button"
+                                            className="btn btn-sm btn-warning"
+                                            onClick={() => handleEdit(todo.id, todo.label)}
+                                            >
+                                            <i className="far fa-edit"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
-                        ) : (
-                            <p className="item">
-                                {todo.label}
-                                <span onClick={() => eraseTodo(todo.id)} className="float-end p-0 m-0 erase">x</span>
-                                <span onClick={() => handleEdit(todo.id, todo.label)} className="float-end p-0 mt-2 me-2 edit"><i className="far fa-edit"></i></span>
-                            </p>
-                        )}
+                        ))}
+                        </ul>
+                        <div className="card-footer">
+                            <p className="text-muted">{todos.length} {todos.length === 1 ? 'tarea' : 'tareas'} por hacer</p>
+                        </div>
+                        </div>
+                    </form>
+                    
+                    <div className="d-flex justify-content-end mt-3">
+                        <button type="button" onClick={eraseAll} className="btn btn-danger">Borrar todo</button>
                     </div>
-                ))}
-                <div className="row shadow-sm foot">
-                    <p className="m-1">{todos.length} {todos.length === 1 ? 'tarea' : 'tareas'} por hacer</p>
+            
                 </div>
-            </form>
-            <div>
-                <button type="button" onClick={eraseAll} className="btn btn-danger ms-5">Borrar todo</button>
             </div>
         </div>
-        
     );
     
 };    

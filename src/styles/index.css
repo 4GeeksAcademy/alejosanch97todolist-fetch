@@ -24,41 +24,29 @@
   width: 100vw; 
 }
 
-input{
-  background-color: rgb(238, 238, 247);
-  border: none;
-  outline: none;
-  font-size: 35px;
-  font-family: 'Courier New', Courier, monospace;
+.listTodo {
+  animation: bounce-fade-in 3s ease-in-out forwards;
 }
 
-.foot{
-  background-color: rgb(238, 238, 247);
-  color: rgb(161, 161, 211);
-  font-size: 12px;
-  text-align: left;
-  font-family: 'Courier New', Courier, monospace;
-}
-.todos{
-  background-color: rgb(238, 238, 247);
-  border: none;
-  outline: none;
-  font-size: 30px;
-  font-family: 'Courier New', Courier, monospace;
-}
-.item{
-  text-align: left;
-}
-.erase{
-  font-size: 20px;
-  color: rgb(161, 161, 211);
-  cursor: pointer;
-
-}
-
-.edit{
-  font-size: 15px;
-  margin-top: 20px;
-  color: rgb(161, 161, 211);
-  cursor: pointer;
+@keyframes bounce-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  70% {
+    transform: translateY(5px);
+  }
+  80% {
+    transform: translateY(-2px);
+  }
+  90% {
+    transform: translateY(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
