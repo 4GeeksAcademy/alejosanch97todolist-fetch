@@ -24,21 +24,41 @@
   width: 100vw; 
 }
 
-.listTodo{
-  animation: slide-in 3s ease-in-out forwards;
+input{
+  background-color: rgb(238, 238, 247);
+  border: none;
+  outline: none;
+  font-size: 35px;
+  font-family: 'Courier New', Courier, monospace;
 }
 
-@keyframes slide-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.foot{
+  background-color: rgb(238, 238, 247);
+  color: rgb(161, 161, 211);
+  font-size: 12px;
+  text-align: left;
+  font-family: 'Courier New', Courier, monospace;
+}
+.todos{
+  background-color: rgb(238, 238, 247);
+  border: none;
+  outline: none;
+  font-size: 30px;
+  font-family: 'Courier New', Courier, monospace;
+}
+.item{
+  text-align: left;
+}
+.erase{
+  font-size: 20px;
+  color: rgb(161, 161, 211);
+  cursor: pointer;
+
 }
 
-.delete .badge {
+.edit{
+  font-size: 15px;
+  margin-top: 20px;
+  color: rgb(161, 161, 211);
   cursor: pointer;
 }
