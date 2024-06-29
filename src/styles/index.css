@@ -28,6 +28,7 @@
   animation: bounce-fade-in 3s ease-in-out forwards;
 }
 
+
 @keyframes bounce-fade-in {
   0% {
     opacity: 0;
