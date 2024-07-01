@@ -6,6 +6,7 @@ const List = () => {
     const [editMode, setEditMode] = useState(false);
     const [editId, setEditId] = useState(null);
     const [editValue, setEditValue] = useState('');
+    const [errorMessage, setErrorMessage] = useState("");
     const host = 'https://playground.4geeks.com/todo';
 
     useEffect(() => {
@@ -23,6 +24,17 @@ const List = () => {
     };
 
     const addTodo = async () => {
+        const trimmedInput = inputValue.trim(); // Trim leading/trailing whitespace
+            if (trimmedInput === "") {
+            setErrorMessage("Invalid task. Please enter a description."); // Set error message
+            return; // Prevent adding empty task
+            }
+            if (trimmedInput.length > 70) {
+                setErrorMessage(
+                  "Your task is too long, please divide your ideas into simple sentences."
+                ); // Set error message
+                return; // Prevent adding long task
+              }
         try {
             const response = await fetch(`${host}/todos/alejosanch97`, {
                 method: 'POST',
@@ -36,7 +48,7 @@ const List = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                setTodos([...todos, { id: data.id, label: inputValue }]);
+                setTodos([...todos, { id: data.id, label: trimmedInput }]);
                 setInputValue('');
                 alert("Task added");
             } else {
@@ -112,19 +124,23 @@ const List = () => {
                  <form>
                     <div className="card">
                         <div className="card-body">
-                            <input
-                                type="text"
-                                className="form-control"
-                                onChange={e => setInputValue(e.target.value)}
-                                value={inputValue}
-                                placeholder="What needs to be done?"
-                                onKeyPress={e => {
-                                    if (e.key === 'Enter') {
-                                        e.preventDefault();
-                                        addTodo();
-                                    }
-                                }}
-                            />
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="What needs to be done?"
+                            value={inputValue}
+                            onChange={(e) => {
+                            setInputValue(e.target.value);
+                            setErrorMessage(""); // Clear error message on input change
+                            }}
+                            onKeyPress={(e) => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                addTodo();
+                            }
+                            }}
+                        />
+                        {errorMessage && <div className="text-danger">{errorMessage}</div>} {/* Display error message if present */}
                         </div>
                         <ul className="list-group list-group-flush">
                         {todos.map(todo => (
