@@ -26,7 +26,7 @@ const List = () => {
     const addTodo = async () => {
         const trimmedInput = inputValue.trim(); // Trim leading/trailing whitespace
             if (trimmedInput === "") {
-            setErrorMessage("Invalid task. Please enter a description."); // Set error message
+            setErrorMessage("Invalid task. Please write something."); // Set error message
             return; // Prevent adding empty task
             }
             if (trimmedInput.length > 70) {
@@ -60,6 +60,13 @@ const List = () => {
     };
 
     const editTodo = async (id) => {
+        const trimmedEditValue = editValue.trim(); // Trim leading/trailing whitespace
+            if (trimmedEditValue.length > 70) {
+                setErrorMessage(
+                 "Your task is too long, please divide your ideas into simple sentences."
+                 );
+                return; // Prevent editing long task
+            }
             const response = await fetch(`${host}/todos/${id}`, {
                 method: 'PUT',
                 headers: {
